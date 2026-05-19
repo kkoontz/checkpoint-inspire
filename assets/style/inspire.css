@@ -1,0 +1,498 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --glass: rgba(12, 14, 18, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --text: #f5f5f5;
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --accent: #7dd3a8;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.inspire-app {
+  position: relative;
+  min-height: 100vh;
+}
+
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: #1a2420;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.image-attribution {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.top-bar {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+}
+
+.todo-toggle {
+  border: none;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  border: 1px solid var(--glass-border);
+  transition: background 0.2s;
+}
+
+.todo-toggle:hover {
+  background: rgba(20, 24, 30, 0.75);
+}
+
+.todo-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 4;
+  width: min(22rem, 92vw);
+  height: 100%;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.todo-panel.is-open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.todo-panel-inner {
+  height: 100%;
+  margin: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.glass-panel,
+.glass-bar {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+}
+
+.todo-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.todo-panel-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.todo-auth-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.todo-panel--locked .add-todo-form,
+.todo-panel--locked .todos-list {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.add-todo-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.add-todo-form input {
+  flex: 1;
+  border: 1px solid var(--glass-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  font: inherit;
+}
+
+.btn-add,
+.btn-icon {
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0.45rem 0.6rem;
+}
+
+.btn-add:hover,
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.todos-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.todo-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  cursor: pointer;
+}
+
+.todo-item.is-done .todo-label {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.todo-delete {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.todo-delete:hover {
+  color: #f87171;
+}
+
+.todo-empty {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.inspire-main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.dashboard-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.dashboard-bar {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: end;
+  gap: 1.5rem;
+  padding: 1.25rem 2rem;
+  border-radius: 1rem;
+  max-width: 72rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.weather-widget .weather-hit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+}
+
+.weather-temp {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.weather-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.center-stack {
+  text-align: center;
+}
+
+.quote-widget {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: none;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.quote-text {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.quote-author {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.quote-widget:hover .quote-author {
+  opacity: 1;
+}
+
+.clock {
+  display: block;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.user-area {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.auth-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn-glass {
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.btn-glass--primary {
+  background: rgba(125, 211, 168, 0.2);
+  border-color: rgba(125, 211, 168, 0.4);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-profile-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.user-greeting {
+  font-size: 0.95rem;
+}
+
+.user-skeleton {
+  width: 10rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.route-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.route-overlay:empty,
+.route-overlay[hidden] {
+  display: none !important;
+}
+
+.settings-card {
+  width: min(28rem, 100%);
+  padding: 2rem;
+  border-radius: 1.25rem;
+  text-align: center;
+}
+
+.settings-back {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 11;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.settings-avatar {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.settings-greeting {
+  margin: 0 0 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+}
+
+.input-row i {
+  color: var(--text-muted);
+}
+
+.input-row input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  padding: 0.65rem 0;
+  font: inherit;
+}
+
+.input-row input:focus {
+  outline: none;
+}
+
+.toggle-row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.toggle-btn {
+  flex: 1;
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+.toggle-btn.is-active {
+  background: rgba(125, 211, 168, 0.25);
+  border-color: var(--accent);
+}
+
+.btn-save {
+  margin-top: 0.5rem;
+  border: none;
+  background: var(--accent);
+  color: #0f1412;
+  padding: 0.65rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  font: inherit;
+}
+
+@media (max-width: 768px) {
+  .dashboard-bar {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .weather-widget .weather-hit {
+    align-items: center;
+  }
+
+  .user-area {
+    justify-content: center;
+  }
+}

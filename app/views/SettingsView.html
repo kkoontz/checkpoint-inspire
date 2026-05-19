@@ -1,0 +1,28 @@
+<a href="#" class="settings-back" id="settings-back">&larr; Back</a>
+<div class="settings-card glass-panel">
+  <img id="settings-avatar" class="settings-avatar" src="" alt="" width="80" height="80" hidden>
+  <p id="settings-greeting" class="settings-greeting">Bonjour</p>
+  <form id="settings-form" class="settings-form">
+    <label class="input-row">
+      <i class="mdi mdi-map-marker" aria-hidden="true"></i>
+      <input type="text" name="city" placeholder="Boise, ID" autocomplete="off">
+    </label>
+    <label class="input-row">
+      <i class="mdi mdi-message-outline" aria-hidden="true"></i>
+      <input type="text" name="greetingName" placeholder="Display name" autocomplete="off">
+    </label>
+    <label class="input-row">
+      <i class="mdi mdi-image-outline" aria-hidden="true"></i>
+      <input type="text" name="collection" placeholder="forests, mountains, woods" autocomplete="off">
+    </label>
+    <div class="toggle-row" role="group" aria-label="Clock format">
+      <button type="button" class="toggle-btn" data-clock-format="12">12</button>
+      <button type="button" class="toggle-btn" data-clock-format="24">24</button>
+    </div>
+    <div class="toggle-row" role="group" aria-label="Temperature unit">
+      <button type="button" class="toggle-btn" data-temp-unit="F">°F</button>
+      <button type="button" class="toggle-btn" data-temp-unit="C">°C</button>
+    </div>
+    <button type="submit" class="btn-save">Save</button>
+  </form>
+</div>

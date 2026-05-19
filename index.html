@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="./assets/img/logo.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="assets/style/inspire.css">
+  <title>Inspire</title>
+</head>
+
+<body class="inspire-app">
+  <div id="bg-layer" class="bg-layer" aria-hidden="true"></div>
+  <p id="image-attribution" class="image-attribution"></p>
+
+  <header class="top-bar">
+    <button type="button" id="todo-toggle" class="todo-toggle" aria-expanded="false" aria-controls="todo-panel">
+      0 Todos remaining
+    </button>
+  </header>
+
+  <aside id="todo-panel" class="todo-panel" aria-label="Todo list">
+    <div class="todo-panel-inner glass-panel">
+      <div class="todo-panel-header">
+        <h2>Todos</h2>
+        <button type="button" id="todo-panel-close" class="btn-icon" aria-label="Close todos">
+          <i class="mdi mdi-close"></i>
+        </button>
+      </div>
+      <p id="todo-auth-hint" class="todo-auth-hint" hidden>Log in to manage your todos.</p>
+      <form id="add-todo-form" class="add-todo-form">
+        <input type="text" name="description" placeholder="add todo" required autocomplete="off" maxlength="120">
+        <button type="submit" class="btn-add" aria-label="Add todo"><i class="mdi mdi-plus"></i></button>
+      </form>
+      <ul id="todos-list" class="todos-list"></ul>
+    </div>
+  </aside>
+
+  <main class="inspire-main">
+    <div id="dashboard" class="dashboard-shell">
+      <footer class="dashboard-bar glass-bar">
+        <section id="weather-widget" class="weather-widget" aria-live="polite"></section>
+        <section class="center-stack">
+          <blockquote id="quote-widget" class="quote-widget"></blockquote>
+          <time id="clock" class="clock" datetime=""></time>
+        </section>
+        <section id="user-area" class="user-area"></section>
+      </footer>
+    </div>
+    <div id="router-view" class="route-overlay" hidden></div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.22/auth0-spa-js.production.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/jakeoverall/auth0provider-client/browser/Auth0Provider.js"></script>
+  <script src="app/App.js" type="module"></script>
+</body>
+
+</html>
