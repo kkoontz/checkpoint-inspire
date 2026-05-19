@@ -19,7 +19,6 @@ export class AuthController {
     AppState.identity = null
     AuthService.on(AuthService.AUTH_EVENTS.LOADED, () => this.draw())
     AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, () => this.draw())
-    AuthService.on(AuthService.AUTH_EVENTS.NOT_AUTHENTICATED, () => this.draw())
     AppState.on('identity', () => this.draw())
     AppState.on('account', () => this.draw())
     this.draw()
@@ -58,7 +57,7 @@ export class AuthController {
     if (!mount) return
 
     const user = AppState.identity
-    if (AuthService.loading) {
+    if (AuthService.loading || (AuthService.isAuthenticated && !user)) {
       mount.innerHTML = '<div class="user-skeleton" aria-hidden="true"></div>'
       return
     }

@@ -16,9 +16,8 @@ export const AuthService = Auth0Provider.initialize({
   audience,
   redirectUri,
   useRefreshTokens: true,
+  cacheLocation: 'localstorage',
   onRedirectCallback: appState => {
-    // Do not use location.replace — it reloads the page and can leave ?code= in the URL,
-    // which makes the second load fail auth. replaceState matches the MVC template default.
     const target =
       appState?.targetUrl || window.location.pathname + window.location.hash || '/'
     window.history.replaceState({}, document.title, target)
@@ -32,20 +31,41 @@ export function AuthGuard(next) {
   return AuthService.isAuthenticated ? next() : AuthService.loginWithRedirect()
 }
 
-AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async () => {
+let authInterceptorAttached = false
+
+async function applyAuthenticatedSession() {
+  if (!AuthService.isAuthenticated) return
+
+  await AuthService.getTokenSilently()
   api.defaults.headers.authorization = AuthService.bearer
-  api.interceptors.request.use(refreshAuthToken)
+  if (!authInterceptorAttached) {
+    api.interceptors.request.use(refreshAuthToken)
+    authInterceptorAttached = true
+  }
+
+  AuthService.user = AuthService.user || await AuthService.auth0Client.getUser()
   AuthService.user.id = AuthService.user[audience + '/id']
   console.log('🛡️', AuthService.user.nickname, ' Authenticated')
   AppState.identity = new Identity(AuthService.user)
   await accountService.loadAccount()
   await todosService.loadTodos()
+}
+
+AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, () => {
+  applyAuthenticatedSession().catch(error => logger.error(error))
 })
 
-AuthService.on(AuthService.AUTH_EVENTS.NOT_AUTHENTICATED, () => {
-  AppState.identity = null
-  AppState.account = null
-  AppState.todos = []
+// Restore UI when Auth0 reloads session from localStorage on refresh
+AuthService.on(AuthService.AUTH_EVENTS.LOADED, () => {
+  if (AuthService.isAuthenticated && !AppState.identity) {
+    applyAuthenticatedSession().catch(error => logger.error(error))
+  }
+})
+
+AuthService.on(AuthService.AUTH_EVENTS.TOKEN_CHANGE, () => {
+  if (AuthService.isAuthenticated) {
+    api.defaults.headers.authorization = AuthService.bearer
+  }
 })
 
 async function refreshAuthToken(config) {
