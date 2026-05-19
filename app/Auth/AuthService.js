@@ -17,10 +17,11 @@ export const AuthService = Auth0Provider.initialize({
   redirectUri,
   useRefreshTokens: true,
   onRedirectCallback: appState => {
+    // Do not use location.replace — it reloads the page and can leave ?code= in the URL,
+    // which makes the second load fail auth. replaceState matches the MVC template default.
     const target =
-      appState?.targetUrl ||
-      window.location.pathname + window.location.search + window.location.hash
-    window.location.replace(target || '/')
+      appState?.targetUrl || window.location.pathname + window.location.hash || '/'
+    window.history.replaceState({}, document.title, target)
   }
 })
 

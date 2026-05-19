@@ -8,8 +8,7 @@ function loginRedirectOptions(extra = {}) {
   return {
     redirectUri: getRedirectUri(),
     appState: {
-      targetUrl:
-        window.location.pathname + window.location.search + window.location.hash
+      targetUrl: (window.location.pathname + window.location.hash) || '/'
     },
     ...extra
   }
