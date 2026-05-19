@@ -1,7 +1,19 @@
 import { AppState } from '../AppState.js'
+import { getRedirectUri } from '../env.js'
 import { preferencesService } from '../services/PreferencesService.js'
 import { AuthService } from './AuthService.js'
 import { logger } from '../utils/Logger.js'
+
+function loginRedirectOptions(extra = {}) {
+  return {
+    redirectUri: getRedirectUri(),
+    appState: {
+      targetUrl:
+        window.location.pathname + window.location.search + window.location.hash
+    },
+    ...extra
+  }
+}
 
 export class AuthController {
   constructor() {
@@ -16,7 +28,7 @@ export class AuthController {
 
   async login() {
     try {
-      await AuthService.loginWithRedirect()
+      await AuthService.loginWithRedirect(loginRedirectOptions())
     } catch (e) {
       logger.error(e)
     }
@@ -24,9 +36,11 @@ export class AuthController {
 
   async register() {
     try {
-      await AuthService.loginWithRedirect({
-        authorizationParams: { screen_hint: 'signup' }
-      })
+      await AuthService.loginWithRedirect(
+        loginRedirectOptions({
+          authorizationParams: { screen_hint: 'signup' }
+        })
+      )
     } catch (e) {
       logger.error(e)
     }
@@ -34,7 +48,7 @@ export class AuthController {
 
   logout() {
     try {
-      AuthService.logout()
+      AuthService.logout({ returnTo: getRedirectUri() })
     } catch (e) {
       logger.error(e)
     }

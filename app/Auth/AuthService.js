@@ -1,24 +1,26 @@
 import { AppState } from '../AppState.js'
 import { accountService } from '../services/AccountService.js'
 import { todosService } from '../services/TodosService.js'
-import { audience, clientId, domain } from '../env.js'
+import { audience, clientId, domain, getRedirectUri } from '../env.js'
 import { api } from '../utils/Axios.js'
 import { logger } from '../utils/Logger.js'
 import { Identity } from './Identity.js'
 
 // @ts-ignore
 // eslint-disable-next-line no-undef
+const redirectUri = getRedirectUri()
+
 export const AuthService = Auth0Provider.initialize({
   domain,
   clientId,
   audience,
+  redirectUri,
   useRefreshTokens: true,
   onRedirectCallback: appState => {
-    window.location.replace(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname
-    )
+    const target =
+      appState?.targetUrl ||
+      window.location.pathname + window.location.search + window.location.hash
+    window.location.replace(target || '/')
   }
 })
 

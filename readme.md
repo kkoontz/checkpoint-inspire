@@ -9,7 +9,7 @@ npm install
 npm start
 ```
 
-Open [http://localhost:8080](http://localhost:8080) (Auth0 requires localhost, not `file://`).
+Open [http://localhost:8080](http://localhost:8080) (Auth0 requires **`localhost`**, not `127.0.0.1` or `file://`). If you use `npm start`, bookmark localhost — the app will redirect away from `127.0.0.1` automatically.
 
 ## Stack
 

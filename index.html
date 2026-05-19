@@ -9,6 +9,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/style/inspire.css">
   <title>Inspire</title>
+  <script>
+    // CodeWorks Auth0 only allows http://localhost:PORT — not 127.0.0.1
+    if (location.hostname === '127.0.0.1') {
+      const port = location.port ? ':' + location.port : ''
+      location.replace(
+        location.protocol + '//localhost' + port + location.pathname + location.search + location.hash
+      )
+    }
+  </script>
 </head>
 
 <body class="inspire-app">
